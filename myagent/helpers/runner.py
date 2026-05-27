@@ -21,7 +21,7 @@ def run(
     reveal_names=True,
     n_steps=100,
     n_configs=2,
-    max_worlds_per_config=30,
+    max_worlds_per_config=None,
 ):
     """
     **Not needed for submission.** You can use this function to test your agent.
