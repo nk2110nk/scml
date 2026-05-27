@@ -2,7 +2,14 @@ import time
 
 from negmas.helpers import humanize_time
 from rich import print
-from scml.oneshot.agents import RandomOneShotAgent, SyncRandomOneShotAgent
+from scml.oneshot.agents import (
+    EqualDistOneShotAgent,
+    GreedyOneShotAgent,
+    GreedySyncAgent,
+    RandDistOneShotAgent,
+    RandomOneShotAgent,
+    SyncRandomOneShotAgent,
+)
 from scml.std.agents import SyncRandomStdAgent
 from scml.utils import anac2024_oneshot, anac2024_std
 from tabulate import tabulate
@@ -14,6 +21,7 @@ def run(
     reveal_names=True,
     n_steps=100,
     n_configs=2,
+    max_worlds_per_config=30,
 ):
     """
     **Not needed for submission.** You can use this function to test your agent.
@@ -26,6 +34,9 @@ def run(
                      Different world configurations will correspond to
                      different number of factories, profiles
                      , production graphs etc
+        max_worlds_per_config:
+                     Maximum number of assignments to run for each configuration.
+                     Set to None to run every possible assignment.
 
     Returns:
         None
@@ -38,7 +49,14 @@ def run(
     """
 
     if competition == "oneshot":
-        competitors = list(competitors) + [RandomOneShotAgent, SyncRandomOneShotAgent]
+        competitors = list(competitors) + [
+            GreedyOneShotAgent,
+            GreedySyncAgent,
+            RandDistOneShotAgent,
+            EqualDistOneShotAgent,
+            RandomOneShotAgent,
+            SyncRandomOneShotAgent,
+        ]
     else:
         competitors = list(competitors) + [SyncRandomStdAgent, RandomOneShotAgent]
 
@@ -52,6 +70,7 @@ def run(
         verbose=True,
         n_steps=n_steps,
         n_configs=n_configs,
+        max_worlds_per_config=max_worlds_per_config,
     )
     # just make names shorter
     results.total_scores.agent_type = results.total_scores.agent_type.str.split(  # type: ignore
