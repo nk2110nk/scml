@@ -2,6 +2,7 @@ import time
 
 from negmas.helpers import humanize_time
 from rich import print
+from Agents.supmerkos import SupMerKos
 from scml.oneshot.agents import (
     EqualDistOneShotAgent,
     GreedyOneShotAgent,
@@ -52,6 +53,7 @@ def run(
         competitors = list(competitors) + [
             GreedyOneShotAgent,
             GreedySyncAgent,
+            SupMerKos,
             RandDistOneShotAgent,
             EqualDistOneShotAgent,
             RandomOneShotAgent,
